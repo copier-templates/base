@@ -58,3 +58,16 @@ Backups.backupdb
 .MobileBackups.trash
 MobileBackups.trash
 tmbootpicker.efi
+
+### Mise .gitignore template
+# https://mise.jdx.dev/configuration.html
+# https://mise.jdx.dev/configuration/environments.html
+.mise.*.local.toml
+.mise.local.toml
+mise.*.local.toml
+mise.local.toml
+.mise/*.local.toml
+mise/*.local.toml
+
+# https://mise.jdx.dev/configuration.html#tool-versions
+#.tool-versions

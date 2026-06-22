@@ -1,0 +1,17 @@
+[tools]
+git-cliff = "2.13.1"
+pre-commit = "4.6.0"
+shellcheck = "0.11.0"
+
+[env]
+_.file = ".env"
+
+[tasks.install]
+run="pre-commit install"
+hide=true
+description="Initialize pre-commit hooks in the repository"
+
+[tasks.check]
+depends=["install"]
+run="pre-commit run --all-files"
+description="Run repository checks via pre-commit"
