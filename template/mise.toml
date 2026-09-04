@@ -1,0 +1,24 @@
+min_version = { soft = "2025.1.0" }
+
+[tools]
+git-cliff = "2.14.1"
+pre-commit = "4.6.2"
+shellcheck = "0.11.0"
+
+[env]
+_.file = ".env"
+
+[tasks.hooks]
+description = "Initialize pre-commit hooks in the repository"
+run = "pre-commit install --install-hooks"
+sources = [".pre-commit-config.yaml"]
+
+[tasks.check]
+description = "Run repository checks via pre-commit"
+run = "pre-commit run --all-files"
+sources = [".pre-commit-config.yaml"]
+
+[tasks.changelog]
+description = "Generate changelog with git-cliff"
+run = "git-cliff --output CHANGELOG.md"
+outputs = ["CHANGELOG.md"]
