@@ -69,5 +69,9 @@ mise.local.toml
 .mise/*.local.toml
 mise/*.local.toml
 
+### Env - loaded via mise [env] _.file
+# https://mise.jdx.dev/configuration/environments.html#dotenv
+.env
+
 # https://mise.jdx.dev/configuration.html#tool-versions
 #.tool-versions
