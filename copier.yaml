@@ -1,0 +1,66 @@
+_min_copier_version: "9.0.0"
+_templates_suffix: .jinja
+_answers_file: .copier-answers.yml
+_preserve:
+  - .copier-answers.yml
+
+_exclude:
+  - copier.yaml
+  - copier.yml
+  - "~*"
+  - "*.py[co]"
+  - __pycache__
+  - .git
+  - .DS_Store
+  - .svn
+  - CHANGELOG.md
+  - "*.rej"
+
+_tasks:
+  - "git init"
+  - "mise install"
+  - "mise run hooks"
+
+_message_after_copy: |
+  Your project "{{ project_name }}" has been created successfully!
+
+  Next steps:
+
+    1. cd into your project
+    2. Review .copier-answers.yml (committed, required for `copier update`)
+    3. Run `mise run check` to verify hygiene
+
+_message_after_update: |
+  Your project "{{ project_name }}" has been updated successfully!
+  Resolve any conflicts if reported, then run `mise run check`.
+
+project_name:
+  type: str
+  help: Human-readable project name
+  default: my base project
+
+project_slug:
+  type: str
+  help: URL/filesystem-safe slug (lowercase, dashes)
+  default: "{{ project_name|lower|replace(' ', '-')|replace('_', '-')|replace('.', '-') }}"
+  validator: "{% if not (project_slug | regex_search('^[a-z][a-z0-9-]+$')) %}Use lowercase letters, digits, and dashes; start with a letter.{% endif %}"
+
+description:
+  type: str
+  help: One-line project description
+  default: A new base project created with {{ _copier_name }}.
+
+author:
+  type: str
+  help: Copyright holder / author name
+  default: Patryk
+
+email:
+  type: str
+  help: Author contact email
+  default: "8299306+kpatryk@users.noreply.github.com"
+
+copyright_year:
+  type: str
+  help: Copyright year for LICENSE
+  default: "2026"

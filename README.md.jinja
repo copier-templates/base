@@ -1,0 +1,47 @@
+<div align="center">
+
+[![copier](https://img.shields.io/badge/copier-template-orange)](https://copier.readthedocs.io/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![mise](https://mise-versions.jdx.dev/badge.svg)](https://mise.jdx.dev)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+
+# {{ project_name }}
+</div>
+
+{{ description }}
+
+This repository was bootstrapped from `gh:copier-templates/base`. It is intentionally small: baseline repository hygiene for language-agnostic projects — line endings, ignore rules, and local quality checks without imposing a language stack.
+
+## What It Adds
+
+- `.gitignore` with GitHub's `macOS` and `mise` templates
+- `.editorconfig` with LF, UTF-8, final newline, and per-language indent rules
+- `.gitattributes` to normalize text files and mark common binaries
+- `.pre-commit-config.yaml` with basic repository safety and shell linting hooks
+- `mise.toml` to pin the tools used to maintain the repository
+
+## Included Tooling
+
+Tool versions are managed with `mise`.
+
+- `git-cliff` for changelog generation
+- `pre-commit` for local hook execution
+- `shellcheck` for shell script linting
+
+## Usage
+
+After generation, the setup tasks already ran (`git init`, `mise install`, `mise run hooks`). To verify:
+
+```bash
+mise run check
+```
+
+## Updating from the template
+
+Answers are stored in `.copier-answers.yml` (committed). To pull in later template changes:
+
+```bash
+copier update --trust
+```
+
+Note: updates overwrite template-owned files (`README.md`, `mise.toml`, `.pre-commit-config.yaml`, `.gitignore`, etc.).
