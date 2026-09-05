@@ -13,6 +13,7 @@ _exclude:
 
 _tasks:
   - "git init"
+  - "git rev-parse --verify HEAD >/dev/null 2>&1 || git commit --allow-empty -m 'Init commit'"
   - "mise install"
   - "mise run hooks"
 
