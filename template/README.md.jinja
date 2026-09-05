@@ -1,12 +1,11 @@
-<div align="center">
-
-[![copier](https://img.shields.io/badge/copier-template-orange)](https://copier.readthedocs.io/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![mise](https://mise-versions.jdx.dev/badge.svg)](https://mise.jdx.dev)
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+<p align="center">
+  <a href="https://copier.readthedocs.io/"><img src="https://img.shields.io/badge/copier-template-orange" alt="copier"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT"></a>
+  <a href="https://mise.jdx.dev"><img src="https://mise-versions.jdx.dev/badge.svg" alt="mise"></a>
+  <a href="https://github.com/pre-commit/pre-commit"><img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit" alt="pre-commit"></a>
+</p>
 
 # {{ project_name }}
-</div>
 
 {{ description }}
 
@@ -14,16 +13,18 @@ This repository was bootstrapped from `gh:copier-templates/base`. It is intentio
 
 ## What It Adds
 
-- `.gitignore` with GitHub's `macOS` and `mise` templates
-- `.editorconfig` with LF, UTF-8, final newline, and per-language indent rules
-- `.gitattributes` to normalize text files and mark common binaries
-- `.pre-commit-config.yaml` with basic repository safety, shell linting/formatting, and conventional-commit hooks
-- `.shellcheckrc` pinning bash dialect with extra checks enabled
-- `.env.example` as committed example for the mise-loaded `.env` (never committed)
-- `scripts/` for shell scripts (executable bit + shebang + `.sh` extension enforced)
-- `.github/workflows/check.yml` running `mise run check` on push/PR
-- `mise.toml` to pin the tools used to maintain the repository
-- `cliff.toml` configuring conventional-commit changelog generation
+| File | Purpose |
+|---|---|
+| `.editorconfig` | LF, UTF-8, final newline, per-language indents |
+| `.gitattributes` | Text normalization, binary marking |
+| `.gitignore` | `macOS` + `mise` + `.env` ignores |
+| `.pre-commit-config.yaml` | Safety checks, shell lint/format, conventional commits |
+| `.shellcheckrc` | Bash dialect, extra checks |
+| `mise.toml` | Pinned tools (`git-cliff`, `pre-commit`, `shellcheck`, `shfmt`); `hooks` / `check` / `format` / `changelog` tasks |
+| `cliff.toml` | Conventional-commit changelog config |
+| `.github/workflows/check.yml` | CI running `mise run check` on push/PR |
+| `.env.example` | Committed example for mise-loaded `.env` |
+| `scripts/` | Shell scripts (shebang + `.sh` extension enforced) |
 
 ## Included Tooling
 
