@@ -4,6 +4,7 @@ min_version = { soft = "2025.1.0" }
 git-cliff = "2.14.1"
 pre-commit = "4.6.2"
 shellcheck = "0.11.0"
+shfmt = "3.13.1"
 
 [env]
 _.file = ".env"
@@ -17,6 +18,10 @@ sources = [".pre-commit-config.yaml"]
 description = "Run repository checks via pre-commit"
 run = "pre-commit run --all-files"
 sources = [".pre-commit-config.yaml"]
+
+[tasks.format]
+description = "Format shell scripts with shfmt"
+run = "shfmt --list --write ."
 
 [tasks.changelog]
 description = "Generate changelog with git-cliff"

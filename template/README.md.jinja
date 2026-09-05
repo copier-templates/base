@@ -17,7 +17,11 @@ This repository was bootstrapped from `gh:copier-templates/base`. It is intentio
 - `.gitignore` with GitHub's `macOS` and `mise` templates
 - `.editorconfig` with LF, UTF-8, final newline, and per-language indent rules
 - `.gitattributes` to normalize text files and mark common binaries
-- `.pre-commit-config.yaml` with basic repository safety and shell linting hooks
+- `.pre-commit-config.yaml` with basic repository safety, shell linting/formatting, and conventional-commit hooks
+- `.shellcheckrc` pinning bash dialect with extra checks enabled
+- `.env.example` as committed example for the mise-loaded `.env` (never committed)
+- `scripts/` for shell scripts (executable bit + shebang + `.sh` extension enforced)
+- `.github/workflows/check.yml` running `mise run check` on push/PR
 - `mise.toml` to pin the tools used to maintain the repository
 
 ## Included Tooling
@@ -27,6 +31,7 @@ Tool versions are managed with `mise`.
 - `git-cliff` for changelog generation
 - `pre-commit` for local hook execution
 - `shellcheck` for shell script linting
+- `shfmt` for shell script formatting (`mise run format`)
 
 ## Usage
 

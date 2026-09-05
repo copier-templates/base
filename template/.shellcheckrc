@@ -1,0 +1,5 @@
+# shellcheck configuration for generated projects
+# https://github.com/koalaman/shellcheck
+shell=bash
+enable=all
+disable=SC1091
