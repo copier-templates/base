@@ -21,6 +21,7 @@ Generated projects get (from `template/`):
 - `scripts/` (shell scripts; shebang + `.sh` extension enforced)
 - `.github/workflows/check.yml` (GitHub Actions: `mise run check`)
 - `mise.toml` (`git-cliff`, `pre-commit`, `shellcheck`, `shfmt`; `hooks`/`check`/`format`/`changelog` tasks)
+- `cliff.toml` (conventional-commit changelog config)
 - `README.md` + `LICENSE` (templated from answers)
 - `.copier-answers.yml` (committed, required for `copier update`)
 
