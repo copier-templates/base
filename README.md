@@ -57,7 +57,7 @@ mise run check
 |---|---|---|
 | `project_name` | `my base project` | Human-readable project name |
 | `project_slug` | derived from `project_name` | URL/filesystem-safe slug (lowercase, dashes) |
-| `description` | `A new base project created with {{ _copier_name }}.` | One-line project description |
+| `description` | `A new base project.` | One-line project description |
 | `author` | `Patryk` | Copyright holder / author name |
 | `email` | `8299306+kpatryk@users.noreply.github.com` | Author contact email |
 | `copyright_year` | `2026` | Copyright year for LICENSE |

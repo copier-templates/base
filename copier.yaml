@@ -2,6 +2,8 @@ _min_copier_version: "9.0.0"
 _subdirectory: template
 _templates_suffix: .jinja
 _answers_file: .copier-answers.yml
+_envops:
+  undefined: jinja2.StrictUndefined
 _preserve:
   - .copier-answers.yml
 
@@ -44,7 +46,7 @@ project_slug:
 description:
   type: str
   help: One-line project description
-  default: A new base project created with {{ _copier_name }}.
+  default: A new base project.
 
 author:
   type: str
