@@ -75,8 +75,8 @@ Updates overwrite template-owned files — never store per-project customization
 ## Development
 
 - `copier.yaml` — questions, `_subdirectory: template`, `_templates_suffix: .jinja`, tasks
-- `template/` — files copied to output (`*.jinja` rendered, rest verbatim); `{{ _copier_conf.answers_file }}.jinja` renders `.copier-answers.yml`
-- Root hygiene files (`.editorconfig`, `.gitattributes`, `.gitignore`, `.pre-commit-config.yaml`, `mise.toml`, `cliff.toml`) are duplicated into `template/` — keep both copies in sync
+- `template/` — files copied to output (`*.jinja` rendered, rest verbatim), including the answers-file template that renders `.copier-answers.yml`
+- Root hygiene files (`.editorconfig`, `.gitattributes`, `.gitignore`, `.pre-commit-config.yaml`, `mise.toml`, `cliff.toml`, `scripts/validate-render.sh`) are duplicated into `template/` — keep both copies in sync
 - `CHANGELOG.md` — template's own changelog (not copied)
 
 Test a change by rendering to a clean dir (`--skip-tasks` for a fast render-only test), then verify:

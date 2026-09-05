@@ -22,6 +22,13 @@ description = "Run repository checks via pre-commit"
 run = "pre-commit run --all-files"
 sources = [".pre-commit-config.yaml"]
 
+[tasks.validate]
+description = "Validate rendered files: Jinja delimiters, answers file, then pre-commit checks"
+run = [
+  "bash scripts/validate-render.sh",
+  "mise run check"
+]
+
 [tasks.format]
 description = "Format shell scripts with shfmt"
 run = "shfmt --list --write ."

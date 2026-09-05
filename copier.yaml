@@ -17,6 +17,7 @@ _tasks:
   - "git init"
   - "git rev-parse --verify HEAD >/dev/null 2>&1 || git commit --allow-empty -m 'Init commit'"
   - "mise run install"
+  - "mise run validate"
   - "git add -A && (git diff --cached --quiet || git commit -m 'chore: Bootstrapping project from copier template')"
 
 _message_after_copy: |
