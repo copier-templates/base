@@ -16,9 +16,9 @@ Copier template for baseline repository hygiene on language-agnostic projects. S
 | `.editorconfig` | LF, UTF-8, final newline, per-language indents |
 | `.gitattributes` | Text normalization, binary marking |
 | `.gitignore` | `macOS` + `mise` + `.env` ignores |
-| `.pre-commit-config.yaml` | Safety checks, shell lint/format, conventional commits |
+| `.pre-commit-config.yaml` | Safety checks, secrets scanning, shell lint/format, conventional commits |
 | `.shellcheckrc` | Bash dialect, extra checks |
-| `mise.toml` | Pinned tools (`git-cliff`, `pre-commit`, `shellcheck`, `shfmt`); `hooks` / `check` / `format` / `changelog` tasks |
+| `mise.toml` | Pinned tools (`git-cliff`, `gitleaks`, `pre-commit`, `shellcheck`, `shfmt`); `install` / `check` / `format` / `changelog` tasks |
 | `cliff.toml` | Conventional-commit changelog config |
 | `.github/workflows/check.yml` | CI running `mise run check` on push/PR |
 | `.env.example` | Committed example for mise-loaded `.env` |
@@ -45,7 +45,7 @@ copier copy --trust --defaults gh:copier-templates/base path/to/new-repo
 copier copy --skip-tasks gh:copier-templates/base path/to/new-repo
 ```
 
-`--trust` is required: setup tasks run `git init`, `mise install`, and `mise run hooks`. Then verify:
+`--trust` is required: setup tasks run `git init` and `mise run install` (installs tools, initializes hooks), then commit everything as `chore: Bootstrapping project from copier template`. Then verify:
 
 ```bash
 mise run check

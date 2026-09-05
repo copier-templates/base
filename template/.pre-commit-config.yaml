@@ -40,3 +40,10 @@ repos:
   - id: mixed-line-ending
   - id: trailing-whitespace
     args: [--markdown-linebreak-ext=md]
+
+# Detects well-known secret patterns (AWS access key, GitHub token, etc)
+- repo: https://github.com/gitleaks/gitleaks
+  rev: v8.30.0
+  hooks:
+    - id: gitleaks-system
+      pass_filenames: false

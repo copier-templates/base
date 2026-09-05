@@ -9,10 +9,13 @@ shfmt = "3.13.1"
 [env]
 _.file = ".env"
 
-[tasks.hooks]
-description = "Initialize pre-commit hooks in the repository"
-run = "pre-commit install --install-hooks"
-sources = [".pre-commit-config.yaml"]
+[tasks.install]
+description = "Install tools and initialize git hooks [i]"
+alias = "i"
+run = [
+  "mise install",
+  "pre-commit install --install-hooks"
+]
 
 [tasks.check]
 description = "Run repository checks via pre-commit"
