@@ -1,4 +1,4 @@
-_min_copier_version: "9.0.0"
+_min_copier_version: "9.6.0"
 _subdirectory: template
 _templates_suffix: .jinja
 _answers_file: .copier-answers.yml
@@ -41,7 +41,7 @@ _message_after_update: |
 project_name:
   type: str
   help: Human-readable project name
-  default: my base project
+  default: base toolkit
 
 project_slug:
   type: str
