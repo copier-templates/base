@@ -14,11 +14,16 @@ _exclude:
   - "*.rej"
 
 _tasks:
-  - "git init"
-  - "git rev-parse --verify HEAD >/dev/null 2>&1 || git commit --allow-empty -m 'Init commit'"
-  - "mise run install"
-  - "mise run validate"
-  - "git add -A && (git diff --cached --quiet || git commit -m 'chore: Bootstrapping project from copier template')"
+  - command: ["git", "init"]
+    when: "{{ _copier_operation == 'copy' }}"
+  - command: "git rev-parse --verify HEAD >/dev/null 2>&1 || git commit --allow-empty -m 'Init commit'"
+    when: "{{ _copier_operation == 'copy' }}"
+  - command: ["mise", "run", "install"]
+    when: "{{ _copier_operation == 'copy' }}"
+  - command: ["mise", "run", "validate"]
+    when: "{{ _copier_operation == 'copy' }}"
+  - command: "git add -A && (git diff --cached --quiet || git commit -m 'chore: Bootstrapping project from copier base template')"
+    when: "{{ _copier_operation == 'copy' }}"
 
 _message_after_copy: |
   Your project "{{ project_name }}" has been created successfully!
