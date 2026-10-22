@@ -6,7 +6,7 @@ Copier template repo (no app code). `copier.yaml` renders `template/` to new pro
 
 ```bash
 mise run install   # install tools + init hooks
-mise run check     # pre-commit run --all-files (same as CI)
+mise run check     # prek run --all-files (same as CI)
 mise run format    # shfmt --list --write .
 mise run changelog # git-cliff --output CHANGELOG.md
 ```

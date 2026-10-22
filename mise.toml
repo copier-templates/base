@@ -3,7 +3,7 @@ min_version = { soft = "2025.1.0" }
 [tools]
 git-cliff = "2.14.2"
 gum = "0.17.0"
-pre-commit = "4.7.0"
+prek = "0.5.7"
 shellcheck = "0.11.0"
 shfmt = "3.14.1"
 
@@ -15,16 +15,16 @@ description = "Install tools and initialize git hooks [i]"
 alias = "i"
 run = [
   "mise install",
-  "pre-commit install --install-hooks"
+  "prek install --prepare-hooks"
 ]
 
 [tasks.check]
-description = "Run repository checks via pre-commit"
-run = "pre-commit run --all-files"
-sources = [".pre-commit-config.yaml"]
+description = "Run repository checks via prek"
+run = "prek run --all-files"
+sources = ["prek.toml"]
 
 [tasks.validate]
-description = "Validate rendered files: Jinja delimiters, answers file, then pre-commit checks"
+description = "Validate rendered files: Jinja delimiters, answers file, then prek checks"
 run = [
   "bash scripts/validate-render.sh",
   "mise run check"
