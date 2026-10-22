@@ -123,10 +123,13 @@ parse_args() {
 }
 
 pick_level() {
-  if [[ "${LEVEL_SET}" -eq 1 || "${YES}" -eq 1 ]] || ! is_interactive; then
+  if [[ "${LEVEL_SET}" -eq 1 || "${YES}" -eq 1 ]]; then
     return 0
   fi
-  LEVEL="$(gum choose --header "Select bump level" patch minor major)" || die "Cancelled."
+  # shellcheck disable=SC2310 # is_interactive is a safe predicate; suspension of set -e in condition is intended
+  if is_interactive; then
+    LEVEL="$(gum choose --header "Select bump level" patch minor major)" || die "Cancelled."
+  fi
 }
 
 # Resolve the newest stable version per pinned tool and write
@@ -137,7 +140,7 @@ resolve_plan() {
   tools_tsv="$(awk '/^\[tools\]/{t=1; next} /^\[.*\]/{t=0} t && /=/{print}' "${PRIMARY}")"
   while IFS= read -r line; do
     [[ -n "${line}" ]] || continue
-    if [[ "${line}" =~ $ENTRY_RE ]]; then
+    if [[ "${line}" =~ ${ENTRY_RE} ]]; then
       tool="${BASH_REMATCH[1]}"
       current="${BASH_REMATCH[2]}"
     else
@@ -158,6 +161,9 @@ resolve_plan() {
     major)
       prefix=""
       ;;
+    *)
+      die "Unknown level: ${LEVEL}"
+      ;;
     esac
     if [[ -n "${prefix}" ]]; then
       request="${tool}@${prefix}"
@@ -177,10 +183,13 @@ resolve_plan() {
 
 maybe_confirm() {
   local prompt=$1
-  if [[ "${YES}" -eq 1 ]] || ! is_interactive; then
+  if [[ "${YES}" -eq 1 ]]; then
     return 0
   fi
-  gum confirm "${prompt}" || die "Cancelled."
+  # shellcheck disable=SC2310 # is_interactive is a safe predicate; suspension of set -e in condition is intended
+  if is_interactive; then
+    gum confirm "${prompt}" || die "Cancelled."
+  fi
 }
 
 main() {
@@ -256,7 +265,7 @@ main() {
 
   local i
   for i in "${!bump_tools[@]}"; do
-    mise -C "${ROOT}" use --path "${PRIMARY}" "${bump_tools[$i]}@${bump_versions[$i]}"
+    mise -C "${ROOT}" use --path "${PRIMARY}" "${bump_tools[${i}]}@${bump_versions[${i}]}"
   done
 
   # Guard: never leave a floating "latest" request behind; pin exact versions.
