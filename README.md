@@ -2,7 +2,7 @@
   <a href="https://copier.readthedocs.io/"><img src="https://img.shields.io/badge/copier-template-orange" alt="copier"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT"></a>
   <a href="https://mise.jdx.dev"><img src="https://mise-versions.jdx.dev/badge.svg" alt="mise"></a>
-  <a href="https://github.com/pre-commit/pre-commit"><img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit" alt="pre-commit"></a>
+  <a href="https://github.com/j178/prek"><img src="https://img.shields.io/badge/prek-enabled-brightgreen?logo=prek" alt="prek"></a>
 </p>
 
 # Base Template
@@ -16,9 +16,9 @@ Copier template for baseline repository hygiene on language-agnostic projects. S
 | `.editorconfig` | LF, UTF-8, final newline, per-language indents |
 | `.gitattributes` | Text normalization, binary marking |
 | `.gitignore` | `macOS` + `mise` + `.env` ignores |
-| `.pre-commit-config.yaml` | Safety checks, secrets scanning, shell lint/format, conventional commits |
+| `prek.toml` | Safety checks, secrets scanning, shell lint/format, conventional commits |
 | `.shellcheckrc` | Bash dialect, extra checks |
-| `mise.toml` | Pinned tools (`git-cliff`, `gitleaks`, `pre-commit`, `shellcheck`, `shfmt`); `install` / `check` / `format` / `changelog` tasks |
+| `mise.toml` | Pinned tools (`git-cliff`, `gitleaks`, `prek`, `shellcheck`, `shfmt`); `install` / `check` / `format` / `changelog` tasks |
 | `cliff.toml` | Conventional-commit changelog config |
 | `.github/workflows/check.yml` | CI running `mise run check` on push/PR |
 | `.env.example` | Committed example for mise-loaded `.env` |
@@ -76,7 +76,7 @@ Updates overwrite template-owned files — never store per-project customization
 
 - `copier.yaml` — questions, `_subdirectory: template`, `_templates_suffix: .jinja`, tasks
 - `template/` — files copied to output (`*.jinja` rendered, rest verbatim), including the answers-file template that renders `.copier-answers.yml`
-- Root hygiene files (`.editorconfig`, `.gitattributes`, `.gitignore`, `.pre-commit-config.yaml`, `mise.toml`, `cliff.toml`, `scripts/validate-render.sh`) are duplicated into `template/` — keep both copies in sync
+- Root hygiene files (`.editorconfig`, `.gitattributes`, `.gitignore`, `prek.toml`, `mise.toml`, `cliff.toml`, `scripts/validate-render.sh`) are duplicated into `template/` — keep both copies in sync
 - `CHANGELOG.md` — template's own changelog (not copied)
 
 Test a change by rendering to a clean dir (`--skip-tasks` for a fast render-only test), then verify:

@@ -1,0 +1,4 @@
+# prek workspace discovery exclusions (gitignore syntax).
+# `template/` holds copier output sources including its own prek.toml for
+# generated projects — not a nested project to run in this repo.
+template/

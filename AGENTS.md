@@ -4,20 +4,31 @@ Copier template repo (no app code). `copier.yaml` renders `template/` to new pro
 
 ## Commands
 
-```bash
-mise run install   # install tools + init hooks
-mise run check     # pre-commit run --all-files (same as CI)
-mise run format    # shfmt --list --write .
-mise run changelog # git-cliff --output CHANGELOG.md
-```
+| Task | What it does |
+|---|---|
+| `mise run install` | Install pinned tools + init prek git hooks |
+| `mise run check` | Run all prek hooks on every file (same as CI) |
+| `mise run validate` | Check Jinja leftovers + answers file, then `check` |
+| `mise run format` | Format shell scripts with shfmt |
 
-Test rendering:
+Test rendering (use `--vcs-ref=HEAD` so copier uses working HEAD, not the cached tag):
 
 ```bash
-rm -rf /tmp/copier-test && copier copy --trust --defaults --skip-tasks . /tmp/copier-test
+rm -rf /tmp/copier-test && copier copy --trust --defaults --skip-tasks --vcs-ref=HEAD . /tmp/copier-test
 ```
 
 Then run `mise run check` inside `/tmp/copier-test`.
+
+## GitHub Issues & Branch Workflow
+
+- Every change starts from a GitHub issue. Pull it with the `gh` CLI:
+  ```bash
+  gh issue view <number> --json title,body,labels,state
+  ```
+- If the issue does not exist, stop and prompt the user to create the GitHub issue first. Do not invent scope.
+- Create branches as `<type>/<issue-number>-<slug>` (type matches the conventional-commit type), e.g. `chore/1-migrate-to-prek`.
+- Implementation tasks require a PRD plus its GitHub issue before coding starts. Minor changes (typo, single-file docs tweak) may proceed with just the issue, no PRD.
+- Reference the issue in the PR body with `Closes #<number>`.
 
 ## Rules
 

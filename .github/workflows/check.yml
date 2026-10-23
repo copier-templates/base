@@ -1,0 +1,108 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancel superseded runs on the same ref; PR pushes only need the latest.
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+# PR checks never push — read-only.
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Install pinned toolchain with mise
+        uses: jdx/mise-action@v4
+
+      - name: Cache prek
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/prek
+          key: prek-${{ runner.os }}-${{ hashFiles('prek.toml', 'template/prek.toml') }}
+          restore-keys: |
+            prek-${{ runner.os }}-
+
+      # Same command as local development (see AGENTS.md):
+      # validate-render.sh (Jinja leftovers, answers-file context)
+      # then prek run --all-files (single workspace via .prekignore).
+      - name: Run repository checks via mise
+        run: mise run validate
+
+      # Root hygiene files are duplicated into template/ by hand —
+      # fail loudly on drift (workflows dir intentionally excluded:
+      # root ships only prek.yml, template/ ships check.yml + prek.yml).
+      - name: Hygiene mirrors in sync (root vs template/)
+        run: |
+          for f in .editorconfig .gitattributes .gitignore prek.toml mise.toml cliff.toml scripts/validate-render.sh .github/workflows/prek.yml; do
+            diff -u "$f" "template/$f"
+          done
+
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          # Full history so --vcs-ref=HEAD resolves to the tested commit.
+          fetch-depth: 0
+
+      - name: Set up Python for copier
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install copier
+        run: pip install "copier>=9.6"
+
+      - name: Install pinned toolchain with mise
+        uses: jdx/mise-action@v4
+
+      - name: Cache prek
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/prek
+          key: prek-${{ runner.os }}-${{ hashFiles('prek.toml', 'template/prek.toml') }}
+          restore-keys: |
+            prek-${{ runner.os }}-
+
+      # copier _tasks run `git init` + `git commit` inside the render,
+      # which needs an identity (runners have none configured).
+      - name: Configure git identity for copier tasks
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # Full copy (no --skip-tasks): copier _tasks run git init,
+      # mise run install (hooks), mise run validate, and the bootstrap
+      # commit — the same E2E as issue #1 acceptance.
+      # --vcs-ref=HEAD is load-bearing: a local git path otherwise renders
+      # the latest tag, not the working tree (see AGENTS.md).
+      - name: Render template to clean dir
+        run: rm -rf /tmp/copier-test && copier copy --trust --defaults --vcs-ref=HEAD . /tmp/copier-test
+
+      - name: Verify rendered project
+        run: |
+          cd /tmp/copier-test
+          mise run validate
+          mise run check
+          git commit --allow-empty -m "test: verify prek shim fires"
+
+      - name: Assert rendered tree shape
+        run: |
+          test -f /tmp/copier-test/prek.toml
+          test -f /tmp/copier-test/.github/workflows/prek.yml
+          test ! -e /tmp/copier-test/.pre-commit-config.yaml
